@@ -1,0 +1,41 @@
+﻿Package ID,Address ID,Delivery Deadline,Mass (KG),Notes
+1,5,10:30 AM,21,
+2,9,EOD,44,
+3,8,EOD,2,Can only be on truck 2
+4,18,EOD,4,
+5,19,EOD,5,
+6,13,10:30 AM,88,Delayed on flight---will not arrive to depot until 9:05 am
+7,2,EOD,8,
+8,12,EOD,9,
+9,12,EOD,2,Wrong address listed
+10,25,EOD,1,
+11,10,EOD,1,
+12,16,EOD,1,
+13,6,10:30 AM,2,
+14,20,10:30 AM,88,"Must be delivered with 15, 19"
+15,21,9:00 AM,4,
+16,21,10:30 AM,88,"Must be delivered with 13, 19"
+17,14,EOD,2,
+18,3,EOD,6,Can only be on truck 2
+19,4,EOD,37,
+20,17,10:30 AM,37,"Must be delivered with 13, 15"
+21,17,EOD,3,
+22,26,EOD,2,
+23,23,EOD,5,
+24,22,EOD,7,
+25,24,10:30 AM,7,Delayed on flight---will not arrive to depot until 9:05 am
+26,24,EOD,25,
+27,1,EOD,5,
+28,11,EOD,7,Delayed on flight---will not arrive to depot until 9:05 am
+29,2,10:30 AM,2,
+30,12,10:30 AM,1,
+31,15,10:30 AM,1,
+32,15,EOD,1,Delayed on flight---will not arrive to depot until 9:05 am
+33,9,EOD,1,
+34,21,10:30 AM,2,
+35,1,EOD,88,
+36,7,EOD,88,Can only be on truck 2
+37,19,10:30 AM,2,
+38,19,EOD,9,Can only be on truck 2
+39,6,EOD,9,
+40,18,10:30 AM,45,
