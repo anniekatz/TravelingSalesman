@@ -51,3 +51,15 @@ class HashTable:
             if self.table[hash_key][kv][0] == key:
                 self.table[hash_key].pop(kv)
                 return True
+
+    # Lookup method for hash table class
+    # Lookup existing package
+    def lookup(self, key):
+        hash_key = self._hash_func(key)
+        if self.table[hash_key] is not None:
+            for kv in self.table[hash_key]:
+                if kv[0] == key:
+                    return kv[1]
+        else:
+            print('Key ' + key + ' not found')
+            return None

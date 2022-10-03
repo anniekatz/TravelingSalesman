@@ -9,3 +9,4 @@ class DeliveryTruck:
         self.miles_traveled = 0
         self.truck_capacity = 16
         self.current_location = 0
+        self.driver = None
