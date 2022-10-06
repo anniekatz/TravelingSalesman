@@ -4,7 +4,9 @@ class HashTable:
     # Constructor for hash table class
     # Initializes hash table with an optional parameter for capacity
     def __init__(self, capacity=40):
-        self.table = [] * capacity
+        self.table = []
+        for i in range(capacity):
+            self.table.append([])
 
     # Use hash function to get key (bucket)
     def _hash_func(self, key):
@@ -63,3 +65,7 @@ class HashTable:
         else:
             print('Key ' + key + ' not found')
             return None
+
+    def __str__(self):
+        # return hash table as string
+        return str(self.table)

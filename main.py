@@ -3,7 +3,11 @@
 # Student ID: 010458098
 
 import csv
+
+from hash_table import HashTable
 from location import Location
+from package import Package
+
 
 # Use csv reader to get data
 def make_location_list():
@@ -25,10 +29,26 @@ def get_distance_between(loc1,loc2):
             if row[0] == loc1:
                 return row[loc2 + 1]
 
-# if csv is packages
-# make package list
+def make_package_table():
+    with open('csv_resources/package_table.csv', 'r') as file:
+        csv_reader = csv.reader(file)
+        package_table = HashTable()
+        for row in csv_reader:
+            package_id = row[0].replace('\ufeff', '')
+            location_id = row[1]
+            for location in location_list:
+                if location_id == location.id:
+                    location_zip = location.zip
+                    location_address = location.address
+                    location_city = location.city
+                    location_state = location.state
+            new_package = Package(package_id, location_address, location_city, location_state, location_zip, row[2], row[3], row[4])
+            package_table.insert(package_id, new_package)
+    return package_table
 
-# Create packages and trucks and load them
+
+package_table = make_package_table()
+print(package_table.__str__())
 
 # greedy alg for delivery -- nearest neighbor
 # maybe load trucks manually after greedy alg has been determined?
