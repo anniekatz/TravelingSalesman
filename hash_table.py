@@ -54,7 +54,7 @@ class HashTable:
 
     # Lookup method for hash table class
     # Lookup existing package
-    def lookup(self, key):
+    def search(self, key):
         hash_key = self._hash_func(key)
         if self.table[hash_key] is not None:
             for kv in self.table[hash_key]:

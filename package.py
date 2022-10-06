@@ -11,3 +11,4 @@ class Package:
         self.deadline = deadline
         self.weight = weight
         self.notes = notes
+
