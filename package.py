@@ -22,7 +22,7 @@ class Package:
         if time >= self.delivered_dt:
             return 'DELIVERED AT ' + str(self.delivered_dt)
         if time >= self.departure_dt:
-            return 'ON THE WAY'
+            return 'ON THE TRUCK'
         else:
             return 'AT HUB'
 
