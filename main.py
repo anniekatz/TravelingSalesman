@@ -4,6 +4,7 @@
 
 import csv
 
+from delivery_truck import DeliveryTruck
 from hash_table import HashTable
 from location import Location
 from package import Package
@@ -48,7 +49,12 @@ def make_package_table():
 
 
 package_table = make_package_table()
-print(package_table.__str__())
+
+
+# Load delivery trucks manually
+truck1 = DeliveryTruck(1, [4,13,14,15,16,19,20,21,34,39,40], '8:00 AM')
+truck2 = DeliveryTruck(2, [2,3,8,9,10,11,12,17,18,23,27,28,33,35,36,38], '10:20 AM')
+truck3 = DeliveryTruck(3, [1,5,6,7,22,24,25,26,29,30,31,32,37], '9:05 AM')
 
 # greedy alg for delivery -- nearest neighbor
 # maybe load trucks manually after greedy alg has been determined?

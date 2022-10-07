@@ -11,5 +11,18 @@ class Package:
         self.weight = weight
         self.notes = notes
         self.package_status = "AT HUB"
-        self.delivered_time = None
+        self.departure_dt = None
+        self.delivered_dt = None
+
+
+    def __str__(self):
+        return "Package ID: " + self.id + " Address: " + self.address + " City: " + self.city + " State: " + self.state + " Zip: " + self.zip + " Deadline: " + self.deadline + " Weight: " + self.weight + " Notes: " + self.notes + " Status: " + self.package_status + " Departure Time: " + self.departure_dt + " Delivered Time: " + str(self.delivered_dt)
+
+    def get_package_status(self, time):
+        if time >= self.delivered_dt:
+            return 'DELIVERED AT ' + str(self.delivered_dt)
+        if time >= self.departure_dt:
+            return 'ON THE WAY'
+        else:
+            return 'AT HUB'
 
