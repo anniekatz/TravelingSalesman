@@ -9,14 +9,14 @@ class HashTable:
             self.table.append([])
 
     # Use hash function to get key (bucket)
-    def _hash_func(self, key):
+    def hash_func(self, key):
         hash_bucket = int(key) % len(self.table)
         return hash_bucket
 
     # Insert method for hash table class
     # Insert new package
     def insert(self, key, val):
-        hash_key = self._hash_func(key)
+        hash_key = self.hash_func(key)
         kv_pair = [key, val]
 
         if self.table[hash_key] is None:
@@ -33,7 +33,7 @@ class HashTable:
     # Update method for hash table class
     # Update existing package
     def update(self, key, val):
-        hash_key = self._hash_func(key)
+        hash_key = self.hash_func(key)
         if self.table[hash_key] is not None:
             for kv in self.table[hash_key]:
                 if kv[0] == key:
@@ -45,7 +45,7 @@ class HashTable:
     # Delete method for hash table class
     # Delete existing package
     def delete(self, key):
-        hash_key = self._hash_func(key)
+        hash_key = self.hash_func(key)
         if self.table[hash_key] is None:
             print('Key ' + key + ' not found')
             return False
@@ -57,14 +57,12 @@ class HashTable:
     # Lookup method for hash table class
     # Lookup existing package
     def search(self, key):
-        hash_key = self._hash_func(key)
-        if self.table[hash_key] is not None:
+        hash_key = self.hash_func(key)
+        if self.table[hash_key]:
             for kv in self.table[hash_key]:
                 if kv[0] == key:
                     return kv[1]
-        else:
-            print('Key ' + key + ' not found')
-            return None
+        return None
 
     def __str__(self):
         # return hash table as string

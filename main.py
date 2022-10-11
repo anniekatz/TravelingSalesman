@@ -30,7 +30,8 @@ def get_distance_between(loc1, loc2):
         csv_reader = csv.reader(file)
         for row in csv_reader:
             if row[0] == loc1:
-                return row[loc2 + 1]
+                dist_float = float(row[loc2 + 1])
+                return dist_float
 
 
 def make_package_table():
@@ -46,8 +47,8 @@ def make_package_table():
                     location_address = location.address
                     location_city = location.city
                     location_state = location.state
-            new_package = Package(package_id, location_address, location_city, location_state, location_zip, row[2],
-                                  row[3], row[4])
+            new_package = Package(package_id, location_id, location_address, location_city, location_state, location_zip, row[2],
+                                  row[3], row[4], "AT HUB")
             package_table.insert(package_id, new_package)
     return package_table
 
@@ -65,37 +66,49 @@ def nearest_neighbor_delivery(delivery_truck):
     for package_id in delivery_truck.packages:
         package = package_table.search(package_id)
         tbd.append(package)
-        package.package_status = 'ON TRUCK'
+        package.package_status = "ON THE TRUCK"
 
-   # nearest neighbor algorithm using get_distance_between method
     while len(tbd) > 0:
-        truck_distance = 0
+        next_loc = 50
+        next_pkg = None
         for package in tbd:
             distance = get_distance_between(delivery_truck.current_location, package.location_id)
-            if distance != '':
-                truck_distance += float(distance)
-        print(truck_distance)
-        for package in tbd:
-            distance = get_distance_between(delivery_truck.current_location, package.location_id)
-            if distance != '':
-                if float(distance) < truck_distance:
-                    truck_distance = float(distance)
-                    delivery_truck.packages.remove(package.id)
-                    delivery_truck.packages.append(package.id)
-                    delivery_truck.location_id = package.location_id
-                    tbd.remove(package)
-                    print(package.id)
-                    print(package.location_id)
-                    print(truck_distance)
-                    print(delivery_truck.packages)
-                    print(delivery_truck.location_id)
-                    print(tbd)
+            if distance <= next_loc:
+                next_loc = distance
+                next_pkg = package
 
-# greedy alg for delivery -- nearest neighbor
-# maybe load trucks manually after greedy alg has been determined?
-# like maybe the 3 with the farthest distances in between are where trucks separate idk
+        delivery_truck.package_queue.append(next_pkg.id)
+        tbd.remove(next_pkg)
+        delivery_truck.miles_traveled += next_loc
+        delivery_truck.current_location = next_pkg.location_id
+        delivery_truck.time += next_loc / delivery_truck.speed
+        next_pkg.departure_dt = delivery_truck.departure_time
+        next_pkg.delivered_dt = delivery_truck.time
+        next_pkg.package_status = "DELIVERED"
+
+    # return to hub
+    if len(tbd) == 0:
+        distance = get_distance_between(delivery_truck.current_location, 0)
+        delivery_truck.miles_traveled += distance
+        delivery_truck.time += distance / delivery_truck.speed
+        delivery_truck.returned_to_hub = True
+
+
+nearest_neighbor_delivery(truck1)
+nearest_neighbor_delivery(truck3)
+# Ensure truck 1 has returned and that it's before 10:20
+if truck1.returned_to_hub is True and truck1.time <= truck2.departure_time:
+    nearest_neighbor_delivery(truck2)
 
 # interface for user to see status of packages
-# if csv is addresses:
-# make address dictionary
-# make dict for address_table
+class Main:
+    print("Traveling Salesman Package Delivery System")
+    total_miles = truck1.miles_traveled + truck2.miles_traveled + truck3.miles_traveled
+    print("Overview of Route. Total miles traveled: " + str(total_miles))
+    print("You may look up a package's status or view all packages at specified timestamp.")
+    print("Type '1' and press Enter to look up a package's status or type '2' to view all packages at a specific time.")
+    # Lookup function
+    # UI for time
+
+
+    print(package_table)

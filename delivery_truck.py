@@ -8,9 +8,11 @@ class DeliveryTruck:
         self.departure_time = departure_time
         self.package_queue = []
         self.speed = 18
+        self.time = 0
         self.miles_traveled = 0
         self.truck_capacity = 16
         self.current_location = 0
+        self.returned_to_hub = False
 
     def append_to_queue(self, package):
         self.package_queue.append(package)
