@@ -66,10 +66,9 @@ def nearest_neighbor_delivery(delivery_truck):
     for package_id in delivery_truck.packages:
         package = package_table.search(package_id)
         tbd.append(package)
-        package.package_status = "ON THE TRUCK"
 
     while len(tbd) > 0:
-        next_loc = 50
+        next_loc = 500
         next_pkg = None
         for package in tbd:
             distance = get_distance_between(delivery_truck.current_location, package.location_id)
@@ -84,7 +83,6 @@ def nearest_neighbor_delivery(delivery_truck):
         delivery_truck.time += next_loc / delivery_truck.speed
         next_pkg.departure_dt = delivery_truck.departure_time
         next_pkg.delivered_dt = delivery_truck.time
-        next_pkg.package_status = "DELIVERED"
 
     # return to hub
     if len(tbd) == 0:
@@ -103,12 +101,30 @@ if truck1.returned_to_hub is True and truck1.time <= truck2.departure_time:
 # interface for user to see status of packages
 class Main:
     print("Traveling Salesman Package Delivery System")
-    total_miles = truck1.miles_traveled + truck2.miles_traveled + truck3.miles_traveled
-    print("Overview of Route. Total miles traveled: " + str(total_miles))
-    print("You may look up a package's status or view all packages at specified timestamp.")
-    print("Type '1' and press Enter to look up a package's status or type '2' to view all packages at a specific time.")
-    # Lookup function
-    # UI for time
-
-
-    print(package_table)
+    print("You can: \n"
+          "* Enter '0' to see total miles traveled by all trucks on route \n"
+          "* Enter '1' to see status of particular package \n"
+          "* Enter '2' to see status of all packages at a specified time \n")
+    user_input = input("Enter 0, 1, or 2: ")
+    if user_input == '0':
+        print("Total miles traveled by all trucks on route: ", truck1.miles_traveled + truck2.miles_traveled + truck3.miles_traveled)
+    elif user_input == '1':
+        user_input = input("Enter package ID: ")
+        if package_table.search(user_input) is None:
+            print("Package not found.")
+        else:
+            package = package_table.search(user_input)
+            print(package.__str__())
+    elif user_input == '2':
+        user_input = input("Enter time in 24hr (military time) format (HH:MM): ")
+        # check if user input is a valid time
+        try:
+            user_input = datetime.strptime(user_input, '%H:%M')
+            for package in package_table.table:
+                if package is not None:
+                    if package.departure_dt <= user_input <= package.delivered_dt:
+                        print(package.__str__())
+        except ValueError:
+            print("Invalid time format. Please try again.")
+    else:
+        print("Invalid entry. Please try again using 0, 1, or 2.")
