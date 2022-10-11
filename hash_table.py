@@ -64,6 +64,7 @@ class ManualHashTable:
                     return kv[1]
         return None
 
+
     def __str__(self):
         # return hash table as string
         return str(self.table)

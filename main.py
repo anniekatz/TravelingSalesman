@@ -56,9 +56,9 @@ def make_package_table():
 package_table = make_package_table()
 
 # Load delivery trucks manually
-truck1 = DeliveryTruck(1, [4, 13, 14, 15, 16, 19, 20, 21, 34, 39, 40], '8:00')
+truck1 = DeliveryTruck(1, [4, 13, 14, 15, 16, 19, 20, 21, 34, 39, 40], '08:00')
 truck2 = DeliveryTruck(2, [2, 3, 8, 9, 10, 11, 12, 17, 18, 23, 27, 28, 33, 35, 36, 38], '10:20')
-truck3 = DeliveryTruck(3, [1, 5, 6, 7, 22, 24, 25, 26, 29, 30, 31, 32, 37], '9:05')
+truck3 = DeliveryTruck(3, [1, 5, 6, 7, 22, 24, 25, 26, 29, 30, 31, 32, 37], '09:05')
 
 
 def nearest_neighbor_delivery(delivery_truck):
@@ -92,14 +92,14 @@ def nearest_neighbor_delivery(delivery_truck):
         delivery_truck.returned_to_hub = True
 
 
-nearest_neighbor_delivery(truck1)
-nearest_neighbor_delivery(truck3)
+#nearest_neighbor_delivery(truck1)
+#nearest_neighbor_delivery(truck3)
 # Ensure truck 1 has returned and that it's before 10:20
-if truck1.returned_to_hub is True and truck1.time <= truck2.departure_time:
-    nearest_neighbor_delivery(truck2)
+#if truck1.returned_to_hub is True and truck1.time <= truck2.departure_time:
+#    nearest_neighbor_delivery(truck2)
 
 # interface for user to see status of packages
-class Main:
+def user_interface():
     print("Traveling Salesman Package Delivery System")
     print("You can: \n"
           "* Enter '0' to see total miles traveled by all trucks on route \n"
@@ -128,3 +128,13 @@ class Main:
             print("Invalid time format. Please try again.")
     else:
         print("Invalid entry. Please try again using 0, 1, or 2.")
+
+class Main:
+        if __name__ == '__main__':
+            #user_interface()
+            tbd = []
+            for package_id in truck1.packages:
+                package = package_table.search(package_id)
+                tbd.append(package)
+            print(len(tbd))
+            print(tbd)
