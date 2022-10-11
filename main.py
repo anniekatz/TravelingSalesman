@@ -10,7 +10,7 @@ from location import Location
 from package import Package
 
 
-# Use csv reader to get data
+# Use csv reader to get location data
 def make_location_list():
     # for every row in csv_resources/address_table.csv, make a new location and add to list
     with open('csv_resources/address_table.csv', 'r') as file:
@@ -20,11 +20,10 @@ def make_location_list():
             new_location = Location(row[0], row[1], row[2], row[3], row[4], row[5])
             location_list.append(new_location)
     return location_list
-
-
 location_list = make_location_list()
 
 
+# get distance between 2 location IDs by reading in CSV file
 def get_distance_between(loc1, loc2):
     with open('csv_resources/distance_table.csv', 'r') as file:
         csv_reader = csv.reader(file)
@@ -33,7 +32,7 @@ def get_distance_between(loc1, loc2):
                 dist_float = float(row[loc2 + 1])
                 return dist_float
 
-
+# read in package CSV data
 def make_package_table():
     with open('csv_resources/package_table.csv', 'r') as file:
         csv_reader = csv.reader(file)
@@ -49,10 +48,10 @@ def make_package_table():
                     location_state = location.state
             new_package = Package(package_id, location_id, location_address, location_city, location_state, location_zip, row[2],
                                   row[3], row[4], "AT HUB")
-            package_table.insert(package_id, new_package)
+            package_table.insert(package_id,new_package)
     return package_table
 
-
+# create package hash table
 package_table = make_package_table()
 
 # Load delivery trucks manually
@@ -63,14 +62,17 @@ truck3 = DeliveryTruck(3, [1, 5, 6, 7, 22, 24, 25, 26, 29, 30, 31, 32, 37], '09:
 
 def nearest_neighbor_delivery(delivery_truck):
     tbd = []
-    for package_id in delivery_truck.packages:
-        package = package_table.search(package_id)
+    for package in delivery_truck.packages:
+        package = package_table.search(package)
         tbd.append(package)
 
+    # while there are still packages to deliver, use nearest neighbor algorithm to find next package to deliver
     while len(tbd) > 0:
-        next_loc = 500
-        next_pkg = None
+        # initialize nearest neighbor to first package in list
+        next_loc = 100
+        next_pkg = tbd[0]
         for package in tbd:
+            # use distance to find nearest neighbor
             distance = get_distance_between(delivery_truck.current_location, package.location_id)
             if distance <= next_loc:
                 next_loc = distance
@@ -84,19 +86,17 @@ def nearest_neighbor_delivery(delivery_truck):
         next_pkg.departure_dt = delivery_truck.departure_time
         next_pkg.delivered_dt = delivery_truck.time
 
-    # return to hub
+    # return to hub after all packages have been delivered
     if len(tbd) == 0:
         distance = get_distance_between(delivery_truck.current_location, 0)
+        # add distance and time to get back to hub
         delivery_truck.miles_traveled += distance
         delivery_truck.time += distance / delivery_truck.speed
+        # set current location to hub
+        delivery_truck.current_location = 0
         delivery_truck.returned_to_hub = True
 
 
-#nearest_neighbor_delivery(truck1)
-#nearest_neighbor_delivery(truck3)
-# Ensure truck 1 has returned and that it's before 10:20
-#if truck1.returned_to_hub is True and truck1.time <= truck2.departure_time:
-#    nearest_neighbor_delivery(truck2)
 
 # interface for user to see status of packages
 def user_interface():
@@ -107,8 +107,10 @@ def user_interface():
           "* Enter '2' to see status of all packages at a specified time \n")
     user_input = input("Enter 0, 1, or 2: ")
     if user_input == '0':
+        # total mileage of route
         print("Total miles traveled by all trucks on route: ", truck1.miles_traveled + truck2.miles_traveled + truck3.miles_traveled)
     elif user_input == '1':
+        # status of a particular package
         user_input = input("Enter package ID: ")
         if package_table.search(user_input) is None:
             print("Package not found.")
@@ -116,6 +118,7 @@ def user_interface():
             package = package_table.search(user_input)
             print(package.__str__())
     elif user_input == '2':
+        # status of all packages at a specified time
         user_input = input("Enter time in 24hr (military time) format (HH:MM): ")
         # check if user input is a valid time
         try:
@@ -131,6 +134,12 @@ def user_interface():
 
 class Main:
         if __name__ == '__main__':
+            # run program
+            # nearest_neighbor_delivery(truck1)
+            # nearest_neighbor_delivery(truck3)
+            # Ensure truck 1 has returned and that it's before 10:20
+            # if truck1.returned_to_hub is True and truck1.time <= truck2.departure_time:
+            #    nearest_neighbor_delivery(truck2)
             #user_interface()
             tbd = []
             for package_id in truck1.packages:
@@ -138,3 +147,7 @@ class Main:
                 tbd.append(package)
             print(len(tbd))
             print(tbd)
+
+
+            for i in range (len(package_table.table) +1):
+                    print(package_table.search(i).__str__())

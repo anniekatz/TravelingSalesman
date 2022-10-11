@@ -15,6 +15,7 @@ class ManualHashTable:
 
     # Insert method for hash table class
     # Insert new package
+    # Uses chaining
     def insert(self, key, val):
         hash_key = self.hash_func(key)
         kv_pair = [key, val]
@@ -54,7 +55,7 @@ class ManualHashTable:
                 self.table[hash_key].pop(kv)
                 return True
 
-    # Lookup method for hash table class
+    # Search method for hash table class
     # Lookup existing package
     def search(self, key):
         hash_key = self.hash_func(key)
@@ -62,7 +63,6 @@ class ManualHashTable:
             for kv in self.table[hash_key]:
                 if kv[0] == key:
                     return kv[1]
-        return None
 
 
     def __str__(self):
