@@ -1,6 +1,6 @@
 # Manual Hash Table implementation
 
-class HashTable:
+class ManualHashTable:
     # Constructor for hash table class
     # Initializes hash table with an optional parameter for capacity
     def __init__(self, capacity=40):

@@ -5,7 +5,7 @@
 import csv
 from datetime import datetime
 from delivery_truck import DeliveryTruck
-from hash_table import HashTable
+from hash_table import ManualHashTable
 from location import Location
 from package import Package
 
@@ -37,7 +37,7 @@ def get_distance_between(loc1, loc2):
 def make_package_table():
     with open('csv_resources/package_table.csv', 'r') as file:
         csv_reader = csv.reader(file)
-        package_table = HashTable()
+        package_table = ManualHashTable()
         for row in csv_reader:
             package_id = row[0].replace('\ufeff', '')
             location_id = row[1]
