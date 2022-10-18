@@ -112,6 +112,7 @@ def nearest_neighbor_delivery(delivery_truck):
         # set current location to hub
         delivery_truck.current_location = 0
         delivery_truck.returned_to_hub = True
+        delivery_truck.return_time = delivery_truck.departure_time + timedelta(hours=delivery_truck.time)
 
 
 
@@ -126,6 +127,9 @@ def user_interface():
     if user_input == '0':
         # total mileage of route
         print("Total miles traveled by all trucks on route: ", truck1.miles_traveled + truck2.miles_traveled + truck3.miles_traveled)
+        print("Truck 1 left the hub at " + str(truck1.departure_time) + " and returned to the hub at " + str(truck1.return_time))
+        print("Truck 2 left the hub at " + str(truck2.departure_time) + " and returned to the hub at " + str(truck2.return_time))
+        print("Truck 3 left the hub at " + str(truck3.departure_time) + " and returned to the hub at " + str(truck3.return_time))
     elif user_input == '1':
         # status of a particular package
         user_input = int(input("Enter package ID: ")) - 1
@@ -156,22 +160,14 @@ class Main:
             nearest_neighbor_delivery(truck1)
             nearest_neighbor_delivery(truck3)
             # Ensure truck 1 has returned and that it's before 10:20
-            if truck1.returned_to_hub is True:
-               nearest_neighbor_delivery(truck2)
+            if truck1.returned_to_hub is True and truck1.return_time <= timedelta(hours=10, minutes=20, seconds=0):
+                    nearest_neighbor_delivery(truck2)
+            else:
+                # if truck 1 returns after 10:20, set a new departure time for truck 2
+                truck2 = DeliveryTruck(2, [2, 3, 8, 9, 10, 11, 12, 17, 18, 23, 27, 28, 33, 35, 36, 38],
+                                       truck1.return_time)
+                nearest_neighbor_delivery(truck2)
 
 
             user_interface()
-
-
-        #    for i in range (len(package_table)):
-        #        package = (package_table[i])
-        #        print(package.__str__())
-        #        # print package id
-        #        print(package.id)
-        #        print(package.location_id)
-
-
-
-            #for i in range (len(location_list)):
-             #   print(location_list[i].__str__())
 

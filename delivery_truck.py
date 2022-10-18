@@ -1,4 +1,7 @@
 # Truck class
+from datetime import timedelta
+
+
 class DeliveryTruck:
 
     # Constructor for DeliveryTruck
@@ -13,6 +16,7 @@ class DeliveryTruck:
         self.truck_capacity = 16
         self.current_location = 0
         self.returned_to_hub = False
+        self.return_time = timedelta(hours=0, minutes=0, seconds=0)
 
 # Return truck attributes
     def __str__(self):
