@@ -138,6 +138,7 @@ def user_interface():
         else:
             package = package_table[user_input]
             print(package.__str__())
+            print(package.get_package_status(truck3.return_time))
     elif user_input == '2':
         # status of all packages at a specified time
         user_input = input("Enter time in 24hr (military time) format (HH:MM): ")
@@ -147,8 +148,7 @@ def user_interface():
             user_time = timedelta(hours=user_input.hour, minutes=user_input.minute, seconds=user_input.second)
             for package in package_table:
                 if package is not None:
-                    if package.departure_dt <= user_time <= package.delivered_dt:
-                        print(package.__str__())
+                        print(package.__str__() + " | STATUS: " + package.get_package_status(user_time))
         except ValueError:
             print("Invalid time format. Please try again.")
     else:
