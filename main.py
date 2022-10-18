@@ -2,6 +2,7 @@
 # C950 WGUPS Traveling Salesman Project
 # Student ID: 010458098
 
+import os
 import csv
 from datetime import datetime
 from delivery_truck import DeliveryTruck
@@ -150,4 +151,5 @@ class Main:
 
 
             for i in range (len(package_table.table) +1):
-                    print(package_table.search(i).__str__())
+                print(package_table.search(i).__str__())
+
