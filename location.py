@@ -7,3 +7,6 @@ class Location:
         self.zip = zip
         self.city = city
         self.state = state
+
+    def __str__(self):
+        return "Location ID: " + self.id + " | Name: " + self.name + " | Address: " + self.address + " | Zip: " + self.zip + " | City: " + self.city + " | State: " + self.state

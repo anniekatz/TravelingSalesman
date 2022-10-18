@@ -14,14 +14,18 @@ from package import Package
 # Use csv reader to get location data
 def make_location_list():
     # for every row in csv_resources/address_table.csv, make a new location and add to list
-    location_list = []
+    addresses = []
     with open('csv_resources/address_table.csv', 'r') as file:
         csv_reader = csv.reader(file)
         for row in csv_reader:
             new_location = Location(row[0], row[1], row[2], row[3], row[4], row[5])
-            location_list.append(new_location)
-    return location_list
+            addresses.append(new_location)
+    return addresses
+
+
+# create location list
 location_list = make_location_list()
+
 
 
 # get distance between 2 location IDs by reading in CSV file
@@ -38,6 +42,7 @@ def make_package_table():
     with open('csv_resources/package_table.csv', 'r') as file:
         csv_reader = csv.reader(file)
         package_table = ManualHashTable()
+        package_list = []
         for row in csv_reader:
             package_id = row[0].replace('\ufeff', '')
             location_id = row[1]
@@ -47,19 +52,20 @@ def make_package_table():
                     location_address = location.address
                     location_city = location.city
                     location_state = location.state
-            new_package = Package(package_id, location_id, location_address, location_city, location_state, location_zip, row[2],
+            new_package = Package(package_id, location_id, location_address, location_city, location_state, location_zip, str(row[2]),
                                   row[3], row[4], "AT HUB")
-            package_table.insert(package_id,new_package)
+            package_table.insert(int(package_id), new_package)
+            package_list.append(new_package)
     return package_table
 
 # create package hash table
 package_table = make_package_table()
 
+
 # Load delivery trucks manually
 truck1 = DeliveryTruck(1, [4, 13, 14, 15, 16, 19, 20, 21, 34, 39, 40], '08:00')
 truck2 = DeliveryTruck(2, [2, 3, 8, 9, 10, 11, 12, 17, 18, 23, 27, 28, 33, 35, 36, 38], '10:20')
 truck3 = DeliveryTruck(3, [1, 5, 6, 7, 22, 24, 25, 26, 29, 30, 31, 32, 37], '09:05')
-
 
 def nearest_neighbor_delivery(delivery_truck):
     tbd = []
@@ -141,6 +147,8 @@ class Main:
             # Ensure truck 1 has returned and that it's before 10:20
             # if truck1.returned_to_hub is True and truck1.time <= truck2.departure_time:
             #    nearest_neighbor_delivery(truck2)
+
+
             #user_interface()
             #tbd = []
             #for package_id in truck1.packages:
@@ -150,6 +158,13 @@ class Main:
             #print(tbd)
 
 
-            for i in range (len(package_table.table) +1):
-                print(package_table.search(i).__str__())
+            for i in range (len(package_table.table) ):
+                print((package_table.search(i)).__str__())
+            #    print(package_table[i].__str__())
+
+
+
+
+            #for i in range (len(location_list)):
+             #   print(location_list[i].__str__())
 
