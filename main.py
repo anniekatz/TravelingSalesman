@@ -13,9 +13,9 @@ from package import Package
 # Use csv reader to get location data
 def make_location_list():
     # for every row in csv_resources/address_table.csv, make a new location and add to list
+    location_list = []
     with open('csv_resources/address_table.csv', 'r') as file:
         csv_reader = csv.reader(file)
-        location_list = []
         for row in csv_reader:
             new_location = Location(row[0], row[1], row[2], row[3], row[4], row[5])
             location_list.append(new_location)
@@ -141,12 +141,12 @@ class Main:
             # if truck1.returned_to_hub is True and truck1.time <= truck2.departure_time:
             #    nearest_neighbor_delivery(truck2)
             #user_interface()
-            tbd = []
-            for package_id in truck1.packages:
-                package = package_table.search(package_id)
-                tbd.append(package)
-            print(len(tbd))
-            print(tbd)
+            #tbd = []
+            #for package_id in truck1.packages:
+            #    package = package_table.search(package_id)
+            #    tbd.append(package)
+            #print(len(tbd))
+            #print(tbd)
 
 
             for i in range (len(package_table.table) +1):
