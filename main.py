@@ -101,7 +101,7 @@ def nearest_neighbor_delivery(delivery_truck):
         delivery_truck.current_location = int(next_pkg.location_id)
         delivery_truck.time += next_loc / delivery_truck.speed
         next_pkg.departure_dt = delivery_truck.departure_time
-        next_pkg.delivered_dt = delivery_truck.time
+        next_pkg.delivered_dt = delivery_truck.departure_time + timedelta(hours=delivery_truck.time)
 
     # return to hub after all packages have been delivered
     if len(tbd) == 0:
