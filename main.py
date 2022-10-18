@@ -128,7 +128,7 @@ def user_interface():
         print("Total miles traveled by all trucks on route: ", truck1.miles_traveled + truck2.miles_traveled + truck3.miles_traveled)
     elif user_input == '1':
         # status of a particular package
-        user_input = int(input("Enter package ID: "))
+        user_input = int(input("Enter package ID: ")) - 1
         if package_table[user_input] is None:
             print("Package not found.")
         else:
@@ -140,9 +140,10 @@ def user_interface():
         # check if user input is a valid time
         try:
             user_input = datetime.strptime(user_input, '%H:%M')
+            user_time = timedelta(hours=user_input.hour, minutes=user_input.minute, seconds=user_input.second)
             for package in package_table:
                 if package is not None:
-                    if package.departure_dt <= user_input <= package.delivered_dt:
+                    if package.departure_dt <= user_time <= package.delivered_dt:
                         print(package.__str__())
         except ValueError:
             print("Invalid time format. Please try again.")

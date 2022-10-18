@@ -19,7 +19,7 @@ class Package:
 
     # Return package attributes
     def __str__(self):
-        return "Package ID: " + self.id + " | Location ID: " + self.location_id + " | Address: " + self.address + " | City: " + self.city + " | State: " + self.state + " | Zip: " + self.zipcode + " | Deadline: " + self.deadline + " | Weight: " + self.weight + " | Notes: " + self.notes + " | Status: " + self.package_status + " | Departure Time: " + self.departure_dt + " | Delivered Time: " + self.delivered_dt
+        return "Package ID: " + self.id + " | Location ID: " + self.location_id + " | Address: " + self.address + " | City: " + self.city + " | State: " + self.state + " | Zip: " + self.zipcode + " | Deadline: " + self.deadline + " | Weight: " + self.weight + " | Notes: " + self.notes + " | Status: " + self.package_status + " | Departure Time: " + str(self.departure_dt) + " | Delivered Time: " + str(self.delivered_dt)
 
     def get_package_status(self, time):
         if time >= self.delivered_dt:
