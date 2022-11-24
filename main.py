@@ -1,7 +1,3 @@
-# Ann Katz
-# C950 WGUPS Traveling Salesman Project
-# Student ID: 010458098
-
 import csv
 from datetime import datetime, timedelta, date, time
 from delivery_truck import DeliveryTruck
